@@ -20,3 +20,6 @@ dependencies = [
 dev = [
     "httpx>=0.28",
 ]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Body"]

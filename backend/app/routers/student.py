@@ -7,7 +7,7 @@ app.core.deps); the email query-parameter pattern was removed.
 from __future__ import annotations
 
 from collections import defaultdict
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import func, select
@@ -20,7 +20,7 @@ from app.models import (
     Assignment,
     AssignmentSubmission,
     Batch,
-    Certificate,  # noqa: F401  (kept for clarity of domain)
+    Certificate,
     CertificateTemplate,
     ClassAttendance,
     ClassSession,
@@ -79,7 +79,7 @@ IST = timezone(timedelta(hours=5, minutes=30))
 
 # ----------------------------------------------------------------- helpers
 def _ist(dt: datetime | None = None) -> datetime:
-    return (dt or datetime.now(timezone.utc)).astimezone(IST)
+    return (dt or datetime.now(UTC)).astimezone(IST)
 
 
 def _date_text(dt: datetime) -> str:
@@ -197,7 +197,7 @@ def _curriculum_progress_pct(modules: list[ModuleDTO]) -> int:
     if not all_lessons:
         return 0
     completed = sum(1 for lesson in all_lessons if lesson.status == "completed")
-    return int(round(100 * completed / len(all_lessons)))
+    return round(100 * completed / len(all_lessons))
 
 
 async def _module_title_map(db: AsyncSession, enrolment: Enrolment) -> dict[int, str]:
@@ -256,7 +256,7 @@ async def dashboard(
             .order_by(ClassSession.scheduled_start)
         )
     ).scalars().all()
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     completed_count = sum(1 for s in session_rows if s.status == "completed")
     upcoming = [
         s for s in session_rows
@@ -277,7 +277,7 @@ async def dashboard(
     ).all()
     held = len(attendance_rows)
     present = sum(1 for a, _s in attendance_rows if a.status in ("present", "late"))
-    attendance_rate = int(round(100 * present / held)) if held else 0
+    attendance_rate = round(100 * present / held) if held else 0
 
     # assignments
     total_assignments = (
@@ -312,7 +312,7 @@ async def dashboard(
         )
     ).scalars().all()
     quiz_avg = (
-        int(round(sum(float(a.score_percent) for a in attempts) / len(attempts)))
+        round(sum(float(a.score_percent) for a in attempts) / len(attempts))
         if attempts
         else 0
     )
@@ -415,7 +415,7 @@ async def complete_lesson(
             )
         )
     ).scalar_one_or_none()
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     if existing is None:
         db.add(
             LessonProgress(
@@ -576,7 +576,7 @@ async def attendance(
 
     total = len(rows)
     attended = counts["present"] + counts["late"]
-    rate = int(round(100 * attended / total)) if total else 0
+    rate = round(100 * attended / total) if total else 0
     return AttendanceSummary(
         sessions=records,
         attendance_rate=rate,
@@ -680,7 +680,7 @@ async def submit_assignment(
             )
         )
     ).scalar_one_or_none()
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     if sub is None:
         sub = AssignmentSubmission(
             brand_id=enrolment.brand_id,
@@ -845,12 +845,12 @@ async def submit_quiz_attempt(
         attempt_number=attempt_number,
         score_percent=score_percent,
         is_passed=passed,
-        submitted_at=datetime.now(timezone.utc),
+        submitted_at=datetime.now(UTC),
     )
     db.add(attempt)
     await db.flush()  # obtain attempt.attempt_id
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     for qq in questions:
         chosen = selected[qq.question_id]
         db.add(
