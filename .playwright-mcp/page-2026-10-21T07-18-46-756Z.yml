@@ -1,0 +1,38 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - heading "Unified Platform Login" [level=1] [ref=e10]
+      - paragraph [ref=e11]: Sign in with your registered email and password. Your brand and role are resolved by the LMS backend.
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: Email Address
+        - textbox "e.g. student@teluguai.com or admin@genai99.com" [ref=e19]: student@teluguai.com
+      - generic [ref=e20]:
+        - generic [ref=e21]: Password
+        - generic [ref=e22]:
+          - textbox [ref=e26]: admin123
+          - button [ref=e27]
+      - button "Sign In" [ref=e31]
+  - generic [ref=e35]:
+    - generic [ref=e36]: 1-Click Demo Accounts (Instant Test)
+    - paragraph [ref=e39]:
+      - text: Seeded accounts — every password is
+      - code [ref=e40]: admin123
+      - text: . The Super Admin button signs into that brand column.
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - generic [ref=e43]: TeluguAI.com
+        - generic [ref=e45]:
+          - button "Super Admin" [ref=e46]
+          - button "Admin" [ref=e47]
+          - button "Counselor" [ref=e48]
+          - button "Trainer" [ref=e49]
+          - button "Student" [ref=e50]
+      - generic [ref=e51]:
+        - generic [ref=e52]: GenAI99.com
+        - generic [ref=e54]:
+          - button "Super Admin" [ref=e55]
+          - button "Admin" [ref=e56]
+          - button "Counselor" [ref=e57]
+          - button "Trainer" [ref=e58]
+          - button "Student" [ref=e59]

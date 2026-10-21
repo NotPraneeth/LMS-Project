@@ -1,0 +1,41 @@
+- generic [active] [ref=f4e1]:
+  - button "Open Next.js Dev Tools" [ref=f4e65] [cursor=pointer]
+  - alert [ref=f4e69]
+  - generic [ref=f4e618]:
+    - generic [ref=f4e619]:
+      - generic [ref=f4e620]:
+        - heading "Unified Platform Login" [level=1] [ref=f4e625]
+        - paragraph [ref=f4e626]: Sign in with your registered email and password. Your brand and role are resolved by the LMS backend.
+      - generic [ref=f4e627]:
+        - generic [ref=f4e628]:
+          - generic [ref=f4e629]: Email Address
+          - textbox "e.g. student@teluguai.com or admin@genai99.com" [ref=f4e634]: student@teluguai.com
+        - generic [ref=f4e635]:
+          - generic [ref=f4e636]: Password
+          - generic [ref=f4e637]:
+            - textbox [ref=f4e641]: admin123
+            - button [ref=f4e642]
+        - button "Sign In" [ref=f4e646]
+    - generic [ref=f4e650]:
+      - generic [ref=f4e651]: 1-Click Demo Accounts (Instant Test)
+      - paragraph [ref=f4e654]:
+        - text: Seeded accounts — every password is
+        - code [ref=f4e655]: admin123
+        - text: . The Super Admin button signs into that brand column.
+      - generic [ref=f4e656]:
+        - generic [ref=f4e657]:
+          - generic [ref=f4e658]: TeluguAI.com
+          - generic [ref=f4e660]:
+            - button "Super Admin" [ref=f4e661]
+            - button "Admin" [ref=f4e662]
+            - button "Counselor" [ref=f4e663]
+            - button "Trainer" [ref=f4e664]
+            - button "Student" [ref=f4e665]
+        - generic [ref=f4e666]:
+          - generic [ref=f4e667]: GenAI99.com
+          - generic [ref=f4e669]:
+            - button "Super Admin" [ref=f4e670]
+            - button "Admin" [ref=f4e671]
+            - button "Counselor" [ref=f4e672]
+            - button "Trainer" [ref=f4e673]
+            - button "Student" [ref=f4e674]

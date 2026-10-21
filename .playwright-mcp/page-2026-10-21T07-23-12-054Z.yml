@@ -1,0 +1,107 @@
+- generic [active] [ref=f4e1]:
+  - button "Open Next.js Dev Tools" [ref=f4e65] [cursor=pointer]
+  - alert [ref=f4e69]
+  - generic [ref=f4e70]:
+    - generic [ref=f4e71]:
+      - generic [ref=f4e74]:
+        - text: Signed in as
+        - strong [ref=f4e75]: Sai Kiran
+        - text: (Student) • TeluguAI.com
+      - button "Switch Account / Logout" [ref=f4e76]
+    - generic [ref=f4e81]:
+      - banner [ref=f4e82]:
+        - generic [ref=f4e84]:
+          - generic [ref=f4e85]: TA
+          - generic [ref=f4e86]:
+            - generic [ref=f4e87]:
+              - generic [ref=f4e88]: TeluguAI
+              - generic [ref=f4e89]: Student Portal
+            - paragraph [ref=f4e90]: "Learner: Sai Kiran • teluguai.com"
+        - button "Logout" [ref=f4e92]
+      - generic [ref=f4e97]:
+        - complementary [ref=f4e98]:
+          - generic [ref=f4e99]:
+            - generic [ref=f4e100]: Student Workspace
+            - button "Dashboard" [ref=f4e101]
+            - button "Curriculum & Lessons" [ref=f4e108]
+            - button "Live Lectures & Replays" [ref=f4e112]
+            - button "Study Materials" [ref=f4e117]
+            - button "Assignments & Projects" [ref=f4e121]
+            - button "Quizzes & Tests" [ref=f4e126]
+            - button "Attendance Record" [ref=f4e131]
+            - button "Tuition & Receipts" [ref=f4e136]
+            - button "Certificates" [ref=f4e140]
+          - generic [ref=f4e146]:
+            - generic [ref=f4e147]: S
+            - generic [ref=f4e148]:
+              - paragraph [ref=f4e149]: Sai Kiran
+              - paragraph [ref=f4e150]: student@teluguai.com
+        - main [ref=f4e151]:
+          - generic [ref=f4e152]:
+            - generic [ref=f4e153]:
+              - generic [ref=f4e154]:
+                - generic [ref=f4e155]:
+                  - generic [ref=f4e156]: TeluguAI Academy
+                  - generic [ref=f4e157]: • Active Learner
+                - heading "Namaste & Welcome, Sai Kiran!" [level=1] [ref=f4e158]
+                - paragraph [ref=f4e159]: Track your curriculum progress, attend live lectures, review feedback, and prepare for certification.
+              - link "Join Live Lecture" [ref=f4e160] [cursor=pointer]:
+                - /url: https://meet.lms.dev/ta-py-c2
+            - generic [ref=f4e165]:
+              - generic [ref=f4e166]:
+                - generic [ref=f4e167]:
+                  - text: TA-PY-2026-C2 · Evening
+                  - heading "Full-Stack Python & Vernacular AI" [level=2] [ref=f4e168]
+                  - paragraph [ref=f4e169]: "Faculty: Ravi Shankar"
+                - generic [ref=f4e170]:
+                  - generic [ref=f4e171]: Curriculum Progress
+                  - generic [ref=f4e172]: 38% Completed
+              - generic [ref=f4e175]:
+                - button "Attendance 90% Eligible for Certificate" [ref=f4e176]:
+                  - generic [ref=f4e177]: Attendance
+                  - generic [ref=f4e181]: 90%
+                  - text: Eligible for Certificate
+                - button "Assignments 3 / 3 0 Pending review" [ref=f4e182]:
+                  - generic [ref=f4e183]: Assignments
+                  - generic [ref=f4e188]: 3 / 3
+                  - generic [ref=f4e189]: 0 Pending review
+                - button "Quiz Average 88% Top 10% in Cohort" [ref=f4e190]:
+                  - generic [ref=f4e191]: Quiz Average
+                  - generic [ref=f4e196]: 88%
+                  - text: Top 10% in Cohort
+                - button "Tuition Fee Partial payment due Receipts available" [ref=f4e197]:
+                  - generic [ref=f4e198]: Tuition Fee
+                  - generic [ref=f4e203]: Partial payment due
+                  - text: Receipts available
+            - generic [ref=f4e204]:
+              - generic [ref=f4e205]:
+                - generic [ref=f4e206]:
+                  - generic [ref=f4e207]:
+                    - generic [ref=f4e208]: Live Session Scheduled Today
+                    - generic [ref=f4e210]: Class 11 of 14
+                  - heading "Async SQLAlchemy Walkthrough + Q&A" [level=3] [ref=f4e211]
+                  - generic [ref=f4e212]:
+                    - generic [ref=f4e213]: 21 Oct 2026 • 07:00 PM - 08:30 PM
+                    - generic [ref=f4e224]:
+                      - text: "Instructor:"
+                      - strong [ref=f4e225]: Ravi Shankar
+                - generic [ref=f4e226]:
+                  - link "Launch Live Meeting Room" [ref=f4e227] [cursor=pointer]:
+                    - /url: https://meet.lms.dev/ta-py-c2
+                  - button "View Lesson Notes" [ref=f4e231]
+              - generic [ref=f4e232]:
+                - generic [ref=f4e233]:
+                  - heading "Cohort Announcements" [level=3] [ref=f4e234]
+                  - paragraph [ref=f4e235]: Direct updates from your trainers
+                  - generic [ref=f4e236]:
+                    - generic [ref=f4e237]:
+                      - generic [ref=f4e238]:
+                        - generic [ref=f4e239]: Module 2 project submissions open
+                        - generic [ref=f4e240]: 21 Oct 2026
+                      - paragraph [ref=f4e241]: Submit your Library REST API by 28 Oct 11:59 PM. Grading within 48 hours.
+                    - generic [ref=f4e242]:
+                      - generic [ref=f4e243]:
+                        - generic [ref=f4e244]: "Guest lecture: MLOps careers in Telugu states"
+                        - generic [ref=f4e245]: 21 Oct 2026
+                      - paragraph [ref=f4e246]: Industry guest on Friday 24 Oct, 7 PM IST. Attendance counts toward your 80% benchmark.
+                - button "Explore Study Materials" [ref=f4e248]

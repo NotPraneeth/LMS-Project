@@ -1,0 +1,82 @@
+- generic [ref=f4e1]:
+  - button "Open Next.js Dev Tools" [ref=f4e65] [cursor=pointer]
+  - alert [ref=f4e69]
+  - generic [ref=f4e70]:
+    - generic [ref=f4e71]:
+      - generic [ref=f4e74]:
+        - text: Signed in as
+        - strong [ref=f4e75]: Sai Kiran
+        - text: (Student) • TeluguAI.com
+      - button "Switch Account / Logout" [ref=f4e76]
+    - generic [ref=f4e81]:
+      - banner [ref=f4e82]:
+        - generic [ref=f4e84]:
+          - generic [ref=f4e85]: TA
+          - generic [ref=f4e86]:
+            - generic [ref=f4e87]:
+              - generic [ref=f4e88]: TeluguAI
+              - generic [ref=f4e89]: Student Portal
+            - paragraph [ref=f4e90]: "Learner: Sai Kiran • teluguai.com"
+        - button "Logout" [ref=f4e92]
+      - generic [ref=f4e97]:
+        - complementary [ref=f4e98]:
+          - generic [ref=f4e99]:
+            - generic [ref=f4e100]: Student Workspace
+            - button "Dashboard" [ref=f4e101]
+            - button "Curriculum & Lessons" [ref=f4e108]
+            - button "Live Lectures & Replays" [ref=f4e112]
+            - button "Study Materials" [ref=f4e117]
+            - button "Assignments & Projects" [ref=f4e121]
+            - button "Quizzes & Tests" [ref=f4e126]
+            - button "Attendance Record" [ref=f4e131]
+            - button "Tuition & Receipts" [active] [ref=f4e136]
+            - button "Certificates" [ref=f4e140]
+          - generic [ref=f4e146]:
+            - generic [ref=f4e147]: S
+            - generic [ref=f4e148]:
+              - paragraph [ref=f4e149]: Sai Kiran
+              - paragraph [ref=f4e150]: student@teluguai.com
+        - main [ref=f4e151]:
+          - generic [ref=f4e486]:
+            - generic [ref=f4e487]:
+              - generic [ref=f4e488]:
+                - heading "Tuition & Fee Receipts" [level=1] [ref=f4e489]
+                - paragraph [ref=f4e490]: Review your tuition breakdown, download tax-compliant receipts, and view payment history.
+              - generic [ref=f4e491]: Balance Outstanding
+            - generic [ref=f4e496]:
+              - generic [ref=f4e497]:
+                - text: Program Plan
+                - generic [ref=f4e498]: Two Installments
+                - generic [ref=f4e499]: "Gross: ₹24,999"
+              - generic [ref=f4e500]:
+                - text: Total Paid
+                - generic [ref=f4e501]: ₹10,000
+                - text: Partially paid
+              - generic [ref=f4e502]:
+                - text: Remaining Due
+                - generic [ref=f4e503]: ₹14,999
+                - text: Payment pending
+            - generic [ref=f4e504]:
+              - generic [ref=f4e505]:
+                - heading "Official Invoices & Payment Records" [level=3] [ref=f4e506]
+                - generic [ref=f4e507]: GST Compliant Tax Receipts
+              - table [ref=f4e511]:
+                - rowgroup [ref=f4e512]:
+                  - row [ref=f4e513]:
+                    - columnheader "Receipt Number" [ref=f4e514]
+                    - columnheader "Description" [ref=f4e515]
+                    - columnheader "Payment Mode" [ref=f4e516]
+                    - columnheader "Transaction ID" [ref=f4e517]
+                    - columnheader "Amount Paid" [ref=f4e518]
+                    - columnheader "Download" [ref=f4e519]
+                - rowgroup [ref=f4e520]:
+                  - row [ref=f4e521]:
+                    - cell "REC-TAI-2026-081 21 Oct 2026" [ref=f4e522]:
+                      - text: REC-TAI-2026-081
+                      - generic [ref=f4e523]: 21 Oct 2026
+                    - cell "Full-Stack Python & Vernacular AI tuition — Invoice INV-TA-2026-081" [ref=f4e524]
+                    - cell [ref=f4e525]
+                    - cell "pay_manual_TA081UPI3001" [ref=f4e529]
+                    - cell "₹10,000" [ref=f4e530]
+                    - cell [ref=f4e531]:
+                      - button "PDF Receipt" [ref=f4e532]

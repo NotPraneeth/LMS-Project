@@ -1,0 +1,463 @@
+%% ============================================================================
+%% High-Level Overview ER Diagram: Inter-Domain Architecture
+%% ============================================================================
+erDiagram
+    BRANDS ||--o{ USERS : "has members"
+    BRANDS ||--o{ COURSES : "owns catalogue"
+    BRANDS ||--o{ BATCHES : "schedules cohorts"
+    BRANDS ||--o{ LEADS : "receives inquiries"
+    BRANDS ||--o{ ENROLMENTS : "admits learners"
+    BRANDS ||--o{ INVOICES : "issues bills"
+    BRANDS ||--o{ CERTIFICATES : "awards credentials"
+
+    USERS ||--o{ USER_ROLES : "assigned roles"
+    USERS ||--o{ STAFF_PROFILES : "staff details"
+    USERS ||--o{ STUDENT_PROFILES : "student details"
+
+    COURSES ||--o{ COURSE_MODULES : "contains"
+    COURSE_MODULES ||--o{ COURSE_LESSONS : "contains"
+    COURSES ||--o{ BATCHES : "instantiates"
+
+    BATCHES ||--o{ CLASS_SESSIONS : "schedules"
+    CLASS_SESSIONS ||--o{ CLASS_ATTENDANCE : "tracks presence"
+
+    LEADS ||--o{ LEAD_STAGE_HISTORY : "tracks stages"
+    LEADS ||--o| ENROLMENTS : "converts into"
+
+    ENROLMENTS ||--o{ INVOICES : "billed by"
+    INVOICES ||--o{ PAYMENTS : "paid by"
+    PAYMENTS ||--o{ PAYMENT_TRANSACTIONS : "gateway events"
+
+    BATCHES ||--o{ ASSIGNMENTS : "issues homework"
+    ASSIGNMENTS ||--o{ ASSIGNMENT_SUBMISSIONS : "submitted by students"
+
+    BATCHES ||--o{ QUIZZES : "authors tests"
+    QUIZZES ||--o{ QUIZ_ATTEMPTS : "taken by students"
+
+    ENROLMENTS ||--o| CERTIFICATES : "graduates with"
+
+%% ============================================================================
+%% Domain 01: Core Identity, Multi-Tenancy & Access Control
+%% ============================================================================
+erDiagram
+    BRANDS {
+        bigint brand_id PK
+        uuid public_id UK
+        varchar slug UK
+        varchar name
+        varchar domain UK
+        varchar status
+        timestamptz created_at
+    }
+
+    USERS {
+        bigint user_id PK
+        uuid public_id UK
+        citext email UK
+        varchar phone
+        varchar password_hash
+        varchar full_name
+        boolean is_super_admin
+        varchar status
+        timestamptz last_active_at
+    }
+
+    USER_BRAND_ACCESS {
+        bigint user_id PK,FK
+        bigint brand_id PK,FK
+        timestamptz granted_at
+    }
+
+    USER_ROLES {
+        bigint user_role_id PK
+        bigint user_id FK
+        bigint brand_id FK
+        varchar role
+        varchar department
+        timestamptz created_at
+    }
+
+    PERMISSIONS {
+        bigint permission_id PK
+        varchar code UK
+        varchar module
+        varchar action_name
+        text description
+    }
+
+    ROLE_PERMISSIONS {
+        varchar role PK
+        bigint permission_id PK,FK
+        boolean is_granted
+        timestamptz updated_at
+    }
+
+    STAFF_PROFILES {
+        bigint staff_profile_id PK
+        bigint user_id FK
+        bigint brand_id FK
+        varchar staff_type
+        varchar specialization
+        varchar instructor_title
+        boolean is_active
+    }
+
+    STUDENT_PROFILES {
+        bigint student_profile_id PK
+        bigint user_id FK
+        bigint brand_id FK
+        varchar student_roll_no
+        varchar whatsapp_number
+        varchar city_or_region
+    }
+
+    USER_SESSIONS {
+        bigint session_id PK
+        bigint user_id FK
+        varchar token_hash UK
+        inet ip_address
+        timestamptz expires_at
+        timestamptz last_activity_at
+    }
+
+    BRANDS ||--o{ USER_BRAND_ACCESS : "grants access"
+    USERS ||--o{ USER_BRAND_ACCESS : "has access"
+    USERS ||--o{ USER_ROLES : "holds"
+    BRANDS ||--o{ USER_ROLES : "scopes"
+    PERMISSIONS ||--o{ ROLE_PERMISSIONS : "assigned to"
+    USERS ||--o| STAFF_PROFILES : "has"
+    BRANDS ||--o{ STAFF_PROFILES : "employs"
+    USERS ||--o| STUDENT_PROFILES : "has"
+    BRANDS ||--o{ STUDENT_PROFILES : "educates"
+    USERS ||--o{ USER_SESSIONS : "authenticates"
+
+%% ============================================================================
+%% Domain 02: Course Catalogue & Learning Materials
+%% ============================================================================
+erDiagram
+    COURSES {
+        bigint course_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        varchar slug
+        varchar title
+        varchar category
+        integer duration_weeks
+        numeric base_fee
+        varchar currency
+        varchar status
+    }
+
+    COURSE_MODULES {
+        bigint module_id PK
+        bigint course_id FK
+        bigint brand_id FK
+        integer module_number
+        varchar title
+        varchar total_duration
+    }
+
+    COURSE_LESSONS {
+        bigint lesson_id PK
+        bigint module_id FK
+        bigint brand_id FK
+        integer lesson_order
+        varchar title
+        integer duration_mins
+        text summary
+        text video_url
+        text code_snippet
+        text notes_pdf_url
+    }
+
+    LEARNING_MATERIALS {
+        bigint material_id PK
+        bigint brand_id FK
+        bigint course_id FK
+        bigint module_id FK
+        bigint batch_id FK
+        varchar title
+        varchar material_type
+        text storage_key
+        varchar file_size_text
+        bigint uploaded_by FK
+    }
+
+    COURSES ||--o{ COURSE_MODULES : "has modules"
+    COURSE_MODULES ||--o{ COURSE_LESSONS : "has lessons"
+    COURSES ||--o{ LEARNING_MATERIALS : "contains resources"
+    COURSE_MODULES ||--o{ LEARNING_MATERIALS : "module resources"
+
+%% ============================================================================
+%% Domain 03: Academic Cohorts, Class Delivery & Attendance
+%% ============================================================================
+erDiagram
+    BATCHES {
+        bigint batch_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        bigint course_id FK
+        bigint primary_trainer_id FK
+        varchar name
+        varchar schedule_days
+        varchar timing_slot
+        date start_date
+        integer max_capacity
+        varchar status
+    }
+
+    CLASS_SESSIONS {
+        bigint class_session_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        bigint batch_id FK
+        bigint trainer_id FK
+        varchar topic
+        varchar mode
+        timestamptz scheduled_start
+        timestamptz scheduled_end
+        text meeting_url
+        text recording_url
+        varchar status
+    }
+
+    CLASS_ATTENDANCE {
+        bigint attendance_id PK
+        bigint brand_id FK
+        bigint class_session_id FK
+        bigint student_id FK
+        varchar status
+        timestamptz joined_at
+        text remarks
+    }
+
+    BATCHES ||--o{ CLASS_SESSIONS : "schedules"
+    CLASS_SESSIONS ||--o{ CLASS_ATTENDANCE : "roster entries"
+
+%% ============================================================================
+%% Domain 04 & 05: Admissions CRM & Enrolments
+%% ============================================================================
+erDiagram
+    LEADS {
+        bigint lead_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        varchar name
+        varchar phone
+        citext email
+        bigint interested_course_id FK
+        bigint assigned_counselor_id FK
+        varchar source
+        varchar funnel_stage
+        numeric fee_quoted
+        bigint converted_student_id FK
+    }
+
+    LEAD_STAGE_HISTORY {
+        bigint stage_history_id PK
+        bigint lead_id FK
+        varchar from_stage
+        varchar to_stage
+        bigint changed_by FK
+        timestamptz created_at
+    }
+
+    LEAD_NOTES {
+        bigint note_id PK
+        bigint lead_id FK
+        bigint author_id FK
+        text note_text
+        timestamptz created_at
+    }
+
+    ENROLMENTS {
+        bigint enrolment_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        bigint student_id FK
+        bigint course_id FK
+        bigint batch_id FK
+        date enrolment_date
+        varchar status
+    }
+
+    ENROLMENT_STATUS_HISTORY {
+        bigint history_id PK
+        bigint enrolment_id FK
+        varchar from_status
+        varchar to_status
+        text reason
+        timestamptz created_at
+    }
+
+    LEADS ||--o{ LEAD_STAGE_HISTORY : "stage moves"
+    LEADS ||--o{ LEAD_NOTES : "counselor notes"
+    LEADS ||--o| ENROLMENTS : "converts to"
+    ENROLMENTS ||--o{ ENROLMENT_STATUS_HISTORY : "status changes"
+
+%% ============================================================================
+%% Domain 06: Tuition Finance & Payments
+%% ============================================================================
+erDiagram
+    FEE_PLANS {
+        bigint fee_plan_id PK
+        bigint brand_id FK
+        bigint course_id FK
+        varchar plan_name
+        varchar plan_type
+        numeric total_amount
+        integer installments_count
+    }
+
+    FEE_PLAN_INSTALMENTS {
+        bigint instalment_id PK
+        bigint fee_plan_id FK
+        integer instalment_no
+        numeric percentage
+        numeric fixed_amount
+        integer due_offset_days
+    }
+
+    INVOICES {
+        bigint invoice_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        bigint enrolment_id FK
+        bigint student_id FK
+        varchar invoice_number
+        numeric billed_amount
+        numeric paid_amount
+        numeric balance_due
+        varchar currency
+        date due_date
+        varchar status
+    }
+
+    PAYMENTS {
+        bigint payment_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        bigint invoice_id FK
+        varchar receipt_number
+        numeric amount
+        varchar currency
+        varchar payment_mode
+        timestamptz created_at
+    }
+
+    PAYMENT_TRANSACTIONS {
+        bigint transaction_id PK
+        bigint brand_id FK
+        bigint payment_id FK
+        varchar gateway
+        varchar gateway_payment_id UK
+        jsonb raw_payload
+        varchar status
+    }
+
+    PAYMENT_ADJUSTMENTS {
+        bigint adjustment_id PK
+        bigint brand_id FK
+        bigint invoice_id FK
+        varchar adjustment_type
+        numeric amount
+        text reason
+    }
+
+    FEE_PLANS ||--o{ FEE_PLAN_INSTALMENTS : "installments"
+    ENROLMENTS ||--o{ INVOICES : "billed"
+    INVOICES ||--o{ PAYMENTS : "settles"
+    PAYMENTS ||--o{ PAYMENT_TRANSACTIONS : "verifies"
+    INVOICES ||--o{ PAYMENT_ADJUSTMENTS : "adjusts"
+
+%% ============================================================================
+%% Domain 07 & 08: Assessments, Progress & Certifications
+%% ============================================================================
+erDiagram
+    ASSIGNMENTS {
+        bigint assignment_id PK
+        uuid public_id UK
+        bigint brand_id FK
+        bigint batch_id FK
+        varchar title
+        integer max_score
+        timestamptz due_date
+        varchar status
+    }
+
+    ASSIGNMENT_SUBMISSIONS {
+        bigint submission_id PK
+        bigint brand_id FK
+        bigint assignment_id FK
+        bigint student_id FK
+        text repo_url
+        numeric score
+        text feedback
+        varchar status
+    }
+
+    QUIZZES {
+        bigint quiz_id PK
+        bigint brand_id FK
+        bigint batch_id FK
+        varchar title
+        integer duration_minutes
+        integer pass_percentage
+        varchar status
+    }
+
+    QUIZ_QUESTIONS {
+        bigint question_id PK
+        bigint quiz_id FK
+        integer question_number
+        text question_text
+        jsonb options
+        smallint correct_option_index
+    }
+
+    QUIZ_ATTEMPTS {
+        bigint attempt_id PK
+        bigint brand_id FK
+        bigint quiz_id FK
+        bigint student_id FK
+        integer attempt_number
+        numeric score_percent
+        boolean is_passed
+    }
+
+    QUIZ_ATTEMPT_ANSWERS {
+        bigint attempt_id PK,FK
+        bigint question_id PK,FK
+        smallint selected_option_index
+        boolean is_correct
+    }
+
+    COURSE_PROGRESS {
+        bigint progress_id PK
+        bigint brand_id FK
+        bigint enrolment_id FK
+        bigint student_id FK
+        numeric attendance_rate
+        integer assignments_done
+        numeric quiz_average
+        boolean is_eligible_for_cert
+    }
+
+    CERTIFICATES {
+        bigint certificate_id PK
+        varchar public_code UK
+        uuid verification_uuid UK
+        bigint brand_id FK
+        bigint enrolment_id FK
+        bigint student_id FK
+        date issue_date
+        varchar instructor_name
+        jsonb skills_certified
+    }
+
+    ASSIGNMENTS ||--o{ ASSIGNMENT_SUBMISSIONS : "student work"
+    QUIZZES ||--o{ QUIZ_QUESTIONS : "questions"
+    QUIZZES ||--o{ QUIZ_ATTEMPTS : "attempts"
+    QUIZ_ATTEMPTS ||--o{ QUIZ_ATTEMPT_ANSWERS : "recorded answers"
+    ENROLMENTS ||--o| COURSE_PROGRESS : "tracks"
+    ENROLMENTS ||--o| CERTIFICATES : "awards"
